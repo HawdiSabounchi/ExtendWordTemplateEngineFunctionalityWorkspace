@@ -79,10 +79,15 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="1" schemaName="tua_customdocumenttemplatemetadata" behavior="0" />
+      <RootComponent type="300" schemaName="cat_custompagetemplate_231d0" behavior="0" />
       <RootComponent type="62" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
       <RootComponent type="80" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
     </RootComponents>
     <MissingDependencies>
+      <MissingDependency>
+        <Required type="300" schemaName="cat_custompagetemplate_231d0" displayName="Custom Page Template" solution="CreatorKitReferencesMDA (1.0.20221205.3)" />
+        <Dependent type="300" schemaName="cat_custompagetemplate_231d0" displayName="Custom Page Template" />
+      </MissingDependency>
       <MissingDependency>
         <Required type="61" schemaName="msdyn_/Images/AppModule_Default_Icon.png" displayName="msdyn_/Images/AppModule_Default_Icon.png" solution="AppModuleWebResources (2.5)" />
         <Dependent type="80" schemaName="tua_ExtendWordTemplateEngineFunctionalit" displayName="Extend Word Template Engine Functionality Workspace" />
