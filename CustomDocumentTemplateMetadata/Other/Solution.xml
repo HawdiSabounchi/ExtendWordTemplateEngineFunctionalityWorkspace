@@ -80,6 +80,7 @@
     <RootComponents>
       <RootComponent type="1" schemaName="tua_customdocumenttemplatemetadata" behavior="0" />
       <RootComponent type="300" schemaName="cat_custompagetemplate_231d0" behavior="0" />
+      <RootComponent type="300" schemaName="tua_templatemanagementcustompage_85384" behavior="0" />
       <RootComponent type="62" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
       <RootComponent type="80" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
     </RootComponents>
