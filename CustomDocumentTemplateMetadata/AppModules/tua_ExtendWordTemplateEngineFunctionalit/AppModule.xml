@@ -21,4 +21,13 @@
   <LocalizedNames>
     <LocalizedName description="Extend Word Template Engine Functionality Workspace" languagecode="1033" />
   </LocalizedNames>
+  <appelements>
+    <appelement uniquename="tua_tua_ExtendWordTemplateEngineFunctionalit_canvasappid_tua_templatemanagementcustompage_85384">
+      <canvasappid>
+        <name>tua_templatemanagementcustompage_85384</name>
+      </canvasappid>
+      <iscustomizable>1</iscustomizable>
+      <name>tua_tua_ExtendWordTemplateEngineFunctionalit_canvasappid_tua_templatemanagementcustompage_85384</name>
+    </appelement>
+  </appelements>
 </AppModule>
