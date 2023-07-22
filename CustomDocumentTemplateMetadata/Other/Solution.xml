@@ -97,6 +97,14 @@
         <Required type="66" schemaName="cat_PowerCAT.CommandBar" displayName="cat_PowerCAT.CommandBar" solution="CreatorKitCore (1.0.20230421.1)" />
         <Dependent type="300" schemaName="tua_templatemanagementcustompage_85384" displayName="Template Management Custom Page" />
       </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="cat_PowerCAT.Elevation" displayName="cat_PowerCAT.Elevation" solution="CreatorKitCore (1.0.20230421.1)" />
+        <Dependent type="300" schemaName="tua_templatemanagementcustompage_85384" displayName="Template Management Custom Page" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="cat_PowerCAT.FluentDetailsList" displayName="cat_PowerCAT.FluentDetailsList" solution="CreatorKitCore (1.0.20230421.1)" />
+        <Dependent type="300" schemaName="tua_templatemanagementcustompage_85384" displayName="Template Management Custom Page" />
+      </MissingDependency>
     </MissingDependencies>
   </SolutionManifest>
 </ImportExportXml>
