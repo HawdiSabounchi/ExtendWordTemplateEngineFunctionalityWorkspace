@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_tua_customdocumenttemplatemetadata" />
+  <EntityRelationship Name="lk_tua_customdocumenttemplatemetadata_createdby" />
+  <EntityRelationship Name="lk_tua_customdocumenttemplatemetadata_modifiedby" />
+  <EntityRelationship Name="owner_tua_customdocumenttemplatemetadata" />
+  <EntityRelationship Name="team_tua_customdocumenttemplatemetadata" />
+  <EntityRelationship Name="user_tua_customdocumenttemplatemetadata" />
+</EntityRelationships>

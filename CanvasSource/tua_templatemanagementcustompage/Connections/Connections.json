@@ -1,0 +1,59 @@
+{
+  "6e39d0cc-5d63-4510-992b-8b6d90116811": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Logic flows",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1645/1.0.1645.3345/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "a54201f9-b615-476f-9c42-2cc1496251d8": {
+          "value": "shared_commondataserviceforapps"
+        },
+        "workflowEntityId": {
+          "value": "f79cd168-7428-ee11-bdf4-000d3aa9a3cc"
+        },
+        "workflowName": {
+          "value": "f8d954de-1f65-f551-2474-21cc7862f9e6"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_commondataserviceforapps": {
+          "value": "a54201f9-b615-476f-9c42-2cc1496251d8"
+        },
+        "workflowEntityId": {
+          "value": "f79cd168-7428-ee11-bdf4-000d3aa9a3cc"
+        },
+        "workflowName": {
+          "value": "f8d954de-1f65-f551-2474-21cc7862f9e6"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "CreateNewFolderOnCustomDocumentTemplateMetadata"
+    ],
+    "dependencies": {
+      "shared_commondataserviceforapps": "a54201f9-b615-476f-9c42-2cc1496251d8"
+    },
+    "dependents": [],
+    "id": "6e39d0cc-5d63-4510-992b-8b6d90116811"
+  },
+  "a54201f9-b615-476f-9c42-2cc1496251d8": {
+    "connectionRef": {
+      "apiTier": "Premium",
+      "bypassConsent": true,
+      "displayName": "Microsoft Dataverse",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1644/1.0.1644.3342/commondataserviceforapps/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "6e39d0cc-5d63-4510-992b-8b6d90116811"
+    ],
+    "id": "a54201f9-b615-476f-9c42-2cc1496251d8"
+  }
+}

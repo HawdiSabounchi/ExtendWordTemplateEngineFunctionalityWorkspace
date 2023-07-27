@@ -1,0 +1,195 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "tua_sharedcommondataserviceforapps_19a31"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "tua_sharedsharepointonline_14783"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "SharePoint Site (tua_SharePointSite)": {
+          "defaultValue": "https://qpx1.sharepoint.com/sites/Dev-Hadi",
+          "type": "String",
+          "metadata": {
+            "schemaName": "tua_SharePointSite"
+          }
+        },
+        "Custom Document Template Management (tua_CustomDocumentTemplateManagement)": {
+          "defaultValue": "1eb6f3d9-7566-4d97-aa8e-14575296976a",
+          "type": "String",
+          "metadata": {
+            "schemaName": "tua_CustomDocumentTemplateManagement"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "f419c798-002d-4d70-8d46-cb0c60655ac0"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "FolderName",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your folder name",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "Path",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your path",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text",
+                "text_1"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Create_a_new_folder_on_Document_Template_Metadata": {
+          "runAfter": {
+            "Create_folder_on_SharePoint_Site": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "c6e062fd-e9f4-45b6-8ad1-e0ab2c7b9389"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "CreateRecord",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "entityName": "tua_customdocumenttemplatemetadatas",
+              "item/tua_correspondingsharepointurl": "@outputs('Create_folder_on_SharePoint_Site')?['body/{Path}']",
+              "item/tua_isfolder": true,
+              "item/tua_name": "@triggerBody()['text']",
+              "item/tua_path": "@triggerBody()['text_1']",
+              "item/tua_personaldocumenttemplateid": "/"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow": {
+          "runAfter": {
+            "Create_a_new_folder_on_Document_Template_Metadata": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "0e1e8cd8-dab6-4bbe-8027-b7a3910a790a"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "created": "True"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "created": {
+                  "title": "created",
+                  "x-ms-dynamically-added": true,
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "Create_folder_on_SharePoint_Site": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "6d0e3c4c-14da-44d3-918f-3e4e7b880e36"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "CreateNewFolder",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('SharePoint Site (tua_SharePointSite)')",
+              "table": "@parameters('Custom Document Template Management (tua_CustomDocumentTemplateManagement)')",
+              "parameters/path": "@concat(triggerBody()['text_1'],triggerBody()['text'])"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Respond_to_a_PowerApp_or_flow_2": {
+          "runAfter": {
+            "Respond_to_a_PowerApp_or_flow": [
+              "Failed",
+              "Skipped",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7b8fbc23-ad61-44aa-a007-c53c90175187"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "created": "false"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "created": {
+                  "title": "created",
+                  "x-ms-dynamically-added": true,
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,134 @@
+{
+  "ComponentIndexes": {
+    "SearchBox": 1,
+    "SearchBox_SubHeader": 10
+  },
+  "ControlUniqueGuids": {},
+  "ControlUniqueIds": {
+    "App": 1,
+    "Button_Cancel_Modal_NewFolder": 29,
+    "Button_Close_Modal_NewFolder": 27,
+    "Button_Ok_Modal_NewFolder": 30,
+    "CommandBar": 10,
+    "Container_Command": 9,
+    "Container_DetailList": 14,
+    "Container_Modal_NewFolder": 23,
+    "Container_Root": 8,
+    "Container_SubHeader": 11,
+    "Corresponding SharePoint Url1": 21,
+    "DetailsList_Templates": 16,
+    "Elevation_DetailList": 15,
+    "Elevation_Modal_NewFolder": 24,
+    "Home Screen": 7,
+    "Host": 3,
+    "iconimage1": 22,
+    "imgSearch_1": 6,
+    "Is Folder1": 18,
+    "Label_Modal_NewFolder": 26,
+    "Label_SubHeader": 12,
+    "Name1": 17,
+    "Path1": 19,
+    "Personal Document Template Id1": 20,
+    "Rectangle_Modal_NewFolder": 25,
+    "SearchBox": 4,
+    "SearchBox_SubHeader": 13,
+    "TextBox_Modal_NewFolder": 28,
+    "txtSearchInput_1": 5
+  },
+  "FunctionParamsInvariantScripts": {},
+  "FunctionParamsInvariantScriptsOnInstances": {},
+  "HeaderLastSavedDateTimeUTC": "07/23/2023 07:42:17",
+  "IsLegacyComponentAllowGlobalScopeCase": false,
+  "LocalConnectionIDReferences": {
+    "6e39d0cc-5d63-4510-992b-8b6d90116811": "\"/providers/microsoft.powerapps/apis/shared_logicflows/connections/f8d954de1f65f551247421cc7862f9e6-fb37601888c99bb2\"",
+    "a54201f9-b615-476f-9c42-2cc1496251d8": "\"/providers/microsoft.powerapps/apis/shared_commondataserviceforapps/connections/shared-commondataser-c8b13e80-cfb5-4a86-8a86-226375fec031\""
+  },
+  "LocalDatabaseReferencesAsEmpty": false,
+  "LocalResourceFileNames": {},
+  "LocalResourceRootPaths": {},
+  "OrderComponentMetadata": {
+    "a7b4c150851e48cd9135da59f99e01ba": 0
+  },
+  "OrderComponentTemplate": {
+    "a7b4c150851e48cd9135da59f99e01ba": 0
+  },
+  "OrderDataSource": {
+    "CreateNewFolderOnCustomDocumentTemplateMetadata": 0,
+    "Custom Document Template Metadatas": 5,
+    "Custom Document Template Metadatas\\default.cds_tua_customdocumenttemplatemetadata_views": 4,
+    "Custom Document Template Metadatas\\tua_customdocumenttemplatemetadata_statecode": 2,
+    "Custom Document Template Metadatas\\tua_customdocumenttemplatemetadata_statuscode": 3,
+    "Custom Document Template Metadatas\\tua_customdocumenttemplatemetadata_tua_isfolder": 1
+  },
+  "OrderGroupControls": {},
+  "OrderPcfTemplate": {
+    "Microsoft_CoreControls_Label": 0,
+    "Microsoft_CoreControls_TextBox": 1
+  },
+  "OrderTemplate": {},
+  "OrderXMLTemplate": {
+    "groupContainer": 0,
+    "image": 3,
+    "label": 1,
+    "pcfDataField": 4,
+    "rectangle": 5,
+    "text": 2
+  },
+  "PublishOrderIndices": {
+    "App": 0,
+    "Button_Cancel_Modal_NewFolder": 21,
+    "Button_Close_Modal_NewFolder": 19,
+    "Button_Ok_Modal_NewFolder": 22,
+    "CommandBar": 2,
+    "Container_Command": 1,
+    "Container_DetailList": 6,
+    "Container_Modal_NewFolder": 15,
+    "Container_Root": 0,
+    "Container_SubHeader": 3,
+    "Corresponding SharePoint Url1": 13,
+    "DetailsList_Templates": 8,
+    "Elevation_DetailList": 7,
+    "Elevation_Modal_NewFolder": 16,
+    "Home Screen": 0,
+    "Host": 0,
+    "iconimage1": 14,
+    "imgSearch_1": 24,
+    "Is Folder1": 10,
+    "Label_Modal_NewFolder": 18,
+    "Label_SubHeader": 4,
+    "Name1": 9,
+    "Path1": 11,
+    "Personal Document Template Id1": 12,
+    "Rectangle_Modal_NewFolder": 17,
+    "SearchBox": 6,
+    "SearchBox_SubHeader": 5,
+    "TextBox_Modal_NewFolder": 20,
+    "txtSearchInput_1": 23
+  },
+  "ResourcesJsonIndices": {
+    "Image-SampleImage": 0
+  },
+  "RuleScreenIdWithoutScreen": {},
+  "TemplateVersions": {},
+  "VolatileProperties": {
+    "AnalysisLoadTime": 0.1614543,
+    "ControlCount": {
+      "a7b4c150851e48cd9135da59f99e01ba": 2,
+      "cat_PowerCAT.CommandBar": 1,
+      "cat_PowerCAT.Elevation": 2,
+      "cat_PowerCAT.FluentDetailsList": 1,
+      "cat_PowerCAT.Icon": 3,
+      "groupContainer": 5,
+      "image": 1,
+      "label": 1,
+      "Microsoft_CoreControls_Label": 1,
+      "Microsoft_CoreControls_TextBox": 1,
+      "pcfDataField": 6,
+      "rectangle": 1,
+      "screen": 1,
+      "text": 1
+    },
+    "DeserializationLoadTime": 1.9980837
+  },
+  "WasLocalDatabaseReferencesEmpty": false
+}

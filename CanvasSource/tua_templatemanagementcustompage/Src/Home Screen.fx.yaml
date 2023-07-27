@@ -1,0 +1,468 @@
+"'Home Screen' As screen":
+    LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+
+    Container_Root As groupContainer.verticalAutoLayoutContainer:
+        Fill: =RGBA(250, 250, 250, 1)
+        Height: =App.Height
+        LayoutAlignItems: =LayoutAlignItems.Stretch
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutMode: =LayoutMode.Auto
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        Width: =App.Width
+        ZIndex: =1
+
+        Container_Command As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =0
+            Height: =44
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            ZIndex: =3
+
+            "CommandBar As 'Fluent Command Bar (1.0.22)'.pcfdataset":
+                DisplayMode: =DisplayMode.Edit
+                Height: =200
+                Items: |-
+                    =Table(
+                        {
+                            ItemKey: "Home",
+                            ItemIconName: "Home",
+                            ItemDisplayName: "Home"
+                        },
+                        {
+                            ItemKey: "NewFolder",
+                            ItemIconName: "Folder",
+                            ItemDisplayName: "New Folder"
+                        },
+                        {
+                            ItemKey: "Upload",
+                            ItemIconName: "Upload",
+                            ItemDisplayName: "Upload"
+                        },
+                        {
+                            ItemKey: "Refresh",
+                            ItemIconName: "Refresh",
+                            ItemDisplayName: "Refresh"
+                        },
+                        {
+                            ItemKey: "GenerateDocument",
+                            ItemIconName: "Waffle",
+                            ItemDisplayName: "Generate Document"
+                        }
+                        
+                    )
+                LayoutMinHeight: =200
+                LayoutMinWidth: =200
+                OnSelect: |-
+                    =Set(
+                        SelectedMenuItem,
+                        Self.Selected.ItemKey
+                    );
+                    If(
+                        Self.Selected.ItemKey = "Home",
+                        Set(
+                            CurrentDirectory,
+                            "/"
+                        );
+                        UpdateContext({ClickedRecordId: ""})
+                    );
+                    If(Self.Selected.ItemKey="Refresh", Refresh('Custom Document Template Metadatas'));
+                    
+                    If(Self.Selected.ItemKey="NewFolder",Set(IsModalNewFolderVisible,true));
+                Theme: =AppThemeJson
+                Width: =600 
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+        Container_SubHeader As groupContainer.horizontalAutoLayoutContainer:
+            AlignInContainer: =AlignInContainer.SetByContainer
+            FillPortions: =0
+            Height: =70
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            PaddingLeft: =10
+            PaddingRight: =10
+            ZIndex: =4
+
+            Label_SubHeader As label:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                Color: =RGBA(20, 0, 0, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FillPortions: =1
+                FocusedBorderThickness: =4
+                Font: =Font.'Segoe UI'
+                FontWeight: =FontWeight.Semibold
+                Height: =70
+                PaddingLeft: =20
+                Text: ="Template Management " & CurrentDirectory
+                Width: =240
+                Y: =241
+                ZIndex: =1
+
+            SearchBox_SubHeader As SearchBox:
+                LayoutMinHeight: =640
+                LayoutMinWidth: =640
+                Styles: |-
+                    =Table({Name: "PrimaryColor1Value", Value: "#ffffff"},
+                    {Name: "PrimaryColor1TextValue", Value: "#292929"},
+                    {Name: "PrimaryColor2Value", Value: "#0078d4"},
+                    {Name: "PrimaryColor2TextValue", Value: "#ffffff"},
+                    {Name: "PrimaryColor3Value", Value: "#303030"},
+                    {Name: "PrimaryColor3TextValue", Value: "#080808"},
+                    {Name: "PrimaryColor4Value", Value: "#006e7d"},
+                    {Name: "defaultLabelColorValue", Value: "#333333"},
+                    {Name: "RadiusValue", Value: "0"},
+                    {Name: "TextBodyFontFaceValue", Value: "Segoe UI" },
+                    {Name: "PaddingValue", Value: "8"},
+                    {Name: "TextEmphasisFontSizeValue", Value: "16"},
+                    {Name: "TextEmphasisFontSizePhoneValue", Value: "24"},
+                    {Name: "TextBodyFontSizeValue", Value: "12"},
+                    {Name: "TextBodyFontSizePhoneValue", Value: "21"},
+                    {Name: "BackgroundColorValue", Value: "#ffffff"},
+                    {Name: "BorderThicknessValue", Value: "0"},
+                    {Name: "BorderColorValue", Value: "#FFFFFF"},
+                    {Name: "FocusedBorderThicknessValue", Value: "0"},
+                    {Name: "BackgroundColorValue", Value :"#FFFFFF"}
+                    )
+                ZIndex: =2
+
+        Container_DetailList As groupContainer.manualLayoutContainer:
+            DropShadow: =DropShadow.Light
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            ZIndex: =5
+
+            "Elevation_DetailList As 'Fluent Elevation (1.0.22)'":
+                DisplayMode: =DisplayMode.Edit
+                Height: =Parent.Height
+                PaddingBottom: =AppSettings.Dimensions.PaddingBottom
+                PaddingLeft: =AppSettings.Dimensions.PaddingLeft
+                PaddingRight: =AppSettings.Dimensions.PaddingRight
+                PaddingTop: =AppSettings.Dimensions.PaddingTop
+                Width: =Parent.Width
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+            "DetailsList_Templates As 'Fluent Details List (1.0.22)'.pcfdataset":
+                columns_Items: |-
+                    =Table(
+                        {
+                            ColName: "iconimage",
+                            ColDisplayName: "",
+                            ColCellType: "image",
+                            ColWidth: 16,
+                            CalImageWidth: 16,
+                            ColImagePadding: 0,
+                            ColVerticalAlign: "Top"
+                        },
+                        {
+                            ColName: "tua_name",
+                            ColDisplayName: "Name",
+                            ColCellType:"Link",
+                            ColWidth: 200,
+                            ColResizable: true,
+                            ColSortable: true,
+                            ColIsBold: true
+                        },
+                        {
+                            ColName: "tua_path",
+                            ColDisplayName: "Path",
+                            ColWidth: 200,
+                            ColResizable: true,
+                            ColSortable: true,
+                            ColIsBold: true
+                        },
+                        {
+                            ColName: "tua_isfolder",
+                            ColDisplayName: "Is Folder",
+                            ColWidth: 100,
+                            ColResizable: true,
+                            ColSortable: true,
+                            ColIsBold: true
+                        },
+                        {
+                            ColName: "tua_personaldocumenttemplateid",
+                            ColDisplayName: "Personal Document Template Id",
+                            ColWidth: 300,
+                            ColResizable: true,
+                            ColSortable: true,
+                            ColIsBold: true
+                        },
+                        {
+                            ColName: "tua_correspondingsharepointurl",
+                            ColDisplayName: "Curresponding Sharepoint Url",
+                            ColWidth: 200,
+                            ColResizable: true,
+                            ColSortable: true,
+                            ColIsBold: true
+                        }
+                    )
+                DisplayMode: =DisplayMode.Edit
+                Height: =Parent.Height-Elevation_DetailList.PaddingTop*2
+                Items: |-
+                    =SortByColumns(
+                        Filter(
+                            AddColumns(
+                                'Custom Document Template Metadatas',
+                                "RecordKey",
+                                'Custom Document Template Metadata',
+                                "iconimage",
+                                If(
+                                    'Is Folder' = 'Is Folder (Custom Document Template Metadatas)'.Yes,
+                                    "icon:Folder",
+                                    "icon:WordDocument"
+                                )
+                            ),
+                            And(
+                                Path = If(
+                                    CurrentDirectory = "/",
+                                    "/",
+                                    CurrentDirectory & "/"
+                                ),
+                                Name <> "/"
+                            )
+                        ),
+                        "tua_isfolder",
+                        SortOrder.Descending
+                    )
+                OnChange: |
+                    =If(
+                        Self.EventName = "CellAction",
+                        UpdateContext({ClickedRecordId: Self.EventRowKey})
+                    );
+                    If(
+                        Self.EventName = "OnRowSelectionChange",
+                        UpdateContext({SelectedRecordId: Self.Selected.'Custom Document Template Metadata'})
+                    );
+                    If(
+                        !IsBlank(ClickedRecordId),
+                        If(
+                            LookUp(
+                                'Custom Document Template Metadatas',
+                                'Custom Document Template Metadata' = GUID(ClickedRecordId)
+                            ).'Is Folder',
+                            Set(
+                                CurrentDirectory,
+                                LookUp(
+                                    'Custom Document Template Metadatas',
+                                    'Custom Document Template Metadata' = GUID(ClickedRecordId)
+                                ).Path & LookUp(
+                                    'Custom Document Template Metadatas',
+                                    'Custom Document Template Metadata' = GUID(ClickedRecordId)
+                                ).Name
+                            )
+                        )
+                    );
+                RaiseOnRowSelectionChangeEvent: =true
+                Width: =Parent.Width-Elevation_DetailList.PaddingLeft*2
+                X: =0
+                Y: =Elevation_DetailList.PaddingTop
+                ZIndex: =2
+
+                Name1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="Name"
+                    FieldName: ="tua_name"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =1
+                    ZIndex: =6
+
+                "'Is Folder1' As pcfDataField.textualColumn":
+                    FieldDisplayName: ="Is Folder"
+                    FieldName: ="tua_isfolder"
+                    FieldType: ="l"
+                    FieldVariantName: ="textualColumn"
+                    Order: =2
+                    ZIndex: =7
+
+                Path1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="Path"
+                    FieldName: ="tua_path"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =3
+                    ZIndex: =8
+
+                "'Personal Document Template Id1' As pcfDataField.textualColumn":
+                    FieldDisplayName: ="Personal Document Template Id"
+                    FieldName: ="tua_personaldocumenttemplateid"
+                    FieldType: ="s"
+                    FieldVariantName: ="textualColumn"
+                    Order: =4
+                    ZIndex: =9
+
+                "'Corresponding SharePoint Url1' As pcfDataField.textualColumn":
+                    FieldDisplayName: ="Corresponding SharePoint Url"
+                    FieldName: ="tua_correspondingsharepointurl"
+                    FieldType: ="h"
+                    FieldVariantName: ="textualColumn"
+                    Order: =5
+                    ZIndex: =10
+
+                iconimage1 As pcfDataField.textualColumn:
+                    FieldDisplayName: ="iconimage"
+                    FieldName: ="iconimage"
+                    FieldType: ="?"
+                    FieldVariantName: ="textualColumn"
+                    Order: =6
+                    ZIndex: =11
+
+    Container_Modal_NewFolder As groupContainer.manualLayoutContainer:
+        DropShadow: =DropShadow.Light
+        RadiusBottomLeft: =4
+        RadiusBottomRight: =4
+        RadiusTopLeft: =4
+        RadiusTopRight: =4
+        Visible: =IsModalNewFolderVisible
+        X: =Parent.Width/2-Self.Width/2
+        Y: =Parent.Height/2-Self.Height/2
+        ZIndex: =2
+
+        "Elevation_Modal_NewFolder As 'Fluent Elevation (1.0.22)'":
+            Depth: ='PowerCAT.Elevation.Depth'.Depth16
+            DisplayMode: =DisplayMode.Edit
+            Height: =Parent.Height
+            HoverDepth: ='PowerCAT.Elevation.HoverDepth'.Depth4
+            PaddingBottom: =AppSettings.Dimensions.PaddingBottom
+            PaddingLeft: =AppSettings.Dimensions.PaddingLeft
+            PaddingRight: =AppSettings.Dimensions.PaddingRight
+            PaddingTop: =AppSettings.Dimensions.PaddingTop
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        Rectangle_Modal_NewFolder As rectangle:
+            BorderColor: =RGBA(166, 166, 166, 1)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            DisabledFill: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(0, 120, 212, 1)
+            FocusedBorderColor: =RGBA(0, 120, 212, 1)
+            Height: =AppSettings.Dimensions.Modal.Button.Height
+            HoverFill: =RGBA(0, 120, 212, 1)
+            PressedFill: =RGBA(0, 120, 212, 1)
+            Width: =Parent.Width-Elevation_Modal_NewFolder.PaddingLeft*2
+            X: =Elevation_Modal_NewFolder.PaddingLeft
+            Y: =Elevation_Modal_NewFolder.PaddingTop
+            ZIndex: =2
+
+        Label_Modal_NewFolder As Label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.Edit
+            FontWeight: =FontWeight.Bold
+            Height: =Rectangle_Modal_NewFolder.Height
+            PaddingStart: =Elevation_Modal_NewFolder.PaddingLeft*3
+            Text: ="Create New Folder"
+            Width: =Parent.Width-Elevation_Modal_NewFolder.PaddingLeft*2
+            X: =Elevation_Modal_NewFolder.PaddingLeft
+            Y: =Elevation_Modal_NewFolder.PaddingTop
+            ZIndex: =3
+
+        "Button_Close_Modal_NewFolder As 'Fluent Icon (1.0.22)'":
+            DisplayMode: =DisplayMode.Edit
+            Height: =AppSettings.Dimensions.Modal.Icon.Height
+            HoverFillColor: ="ColorFade(RGBA(0,120,212,1),-30%)"
+            IconColor: ="white"
+            IconName: ="cancel"
+            IconSize: =
+            OnChange: |
+                =Set(
+                    IsModalNewFolderVisible,
+                    false
+                );
+                UpdateContext({FolderNameValue: Blank()});
+                UpdateContext({FolderNameValue: ""});
+            TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
+            Tooltip: ="Close"
+            Width: =AppSettings.Dimensions.Modal.Icon.Width
+            X: =Parent.Width-Elevation_Modal_NewFolder.PaddingRight*4
+            Y: =Elevation_Modal_NewFolder.PaddingTop*1.9
+            ZIndex: =4
+
+        "TextBox_Modal_NewFolder As 'Text box'":
+            DisplayMode: =DisplayMode.Edit
+            Height: =Parent.Height/5
+            Placeholder: ="Enter Folder Name . . . "
+            Required: =true
+            Tooltip: ="Please enter folder name"
+            Value: =FolderNameValue
+            Width: =Parent.Width-Elevation_Modal_NewFolder.PaddingLeft*6
+            X: =Parent.Width/2-Self.Width/2
+            Y: =Elevation_Modal_NewFolder.PaddingTop*7
+            ZIndex: =5
+
+        "Button_Cancel_Modal_NewFolder As 'Fluent Icon (1.0.22)'":
+            BorderRadius: =3
+            DisplayMode: =DisplayMode.Edit
+            FillColor: =AppSettings.Colors.Modal.Button.Cancel
+            FontColor: =AppSettings.Colors.Modal.Button.FontColor
+            FontSize: =15
+            Height: =AppSettings.Dimensions.Modal.Button.Height
+            IconColor: =AppSettings.Colors.Modal.Button.FontColor
+            IconName: ="cancel"
+            IconType: ='PowerCAT.Icon.IconType'.ActionButton
+            OnChange: |-
+                =Set(IsModalNewFolderVisible, false);
+                UpdateContext({FolderNameValue:Blank()});
+                UpdateContext({FolderNameValue:""});
+            Text: ="Cancel"
+            TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
+            Tooltip: ="Cancel"
+            Width: =AppSettings.Dimensions.Modal.Button.Width
+            X: =AppSettings.Dimensions.Modal.Button.X
+            Y: =AppSettings.Dimensions.Modal.Button.Y
+            ZIndex: =6
+
+        "Button_Ok_Modal_NewFolder As 'Fluent Icon (1.0.22)'":
+            BorderRadius: =3
+            DisplayMode: =If(IsBlank(TextBox_Modal_NewFolder.Value),DisplayMode.Disabled,DisplayMode.Edit)
+            FillColor: =AppSettings.Colors.Modal.Button.Ok
+            FontColor: =AppSettings.Colors.Modal.Button.FontColor
+            FontSize: =15
+            Height: =AppSettings.Dimensions.Modal.Button.Height
+            IconColor: =AppSettings.Colors.Modal.Button.FontColor
+            IconName: ="send"
+            IconType: ='PowerCAT.Icon.IconType'.ActionButton
+            OnChange: |
+                =If(
+                    Boolean(
+                        CreateNewFolderOnCustomDocumentTemplateMetadata.Run(
+                            TextBox_Modal_NewFolder.Value,
+                            If(
+                                CurrentDirectory <> "/",
+                                CurrentDirectory & "/",
+                                CurrentDirectory
+                            )
+                        ).created
+                    ),
+                    Refresh('Custom Document Template Metadatas');
+                    Set(
+                        IsModalNewFolderVisible,
+                        false
+                    );
+                    UpdateContext({FolderNameValue: Blank()});
+                    UpdateContext({FolderNameValue: ""});
+                    
+                );
+            Text: ="OK"
+            TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
+            Tooltip: ="Create Folder"
+            Width: =AppSettings.Dimensions.Modal.Button.Width
+            X: =AppSettings.Dimensions.Modal.Button.X*9
+            Y: =AppSettings.Dimensions.Modal.Button.Y
+            ZIndex: =7
+

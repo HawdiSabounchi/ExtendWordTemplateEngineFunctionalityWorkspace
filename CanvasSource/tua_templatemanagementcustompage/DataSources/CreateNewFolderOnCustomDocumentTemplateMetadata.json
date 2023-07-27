@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "d366907c-9156-4662-9c1b-97143104a77b",
+    "Name": "CreateNewFolderOnCustomDocumentTemplateMetadata",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "f79cd168-7428-ee11-bdf4-000d3aa9a3cc"
+  }
+]

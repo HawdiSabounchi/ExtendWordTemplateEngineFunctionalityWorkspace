@@ -1,0 +1,121 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "tua_customdocumenttemplatemetadatas",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "tua_customdocumenttemplatemetadata",
+    "MaxGetRowsCount": 500,
+    "Name": "Custom Document Template Metadatas",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "Owner",
+      "createdby": "Created By",
+      "createdon": "Created On",
+      "createdonbehalfby": "Created By (Delegate)",
+      "importsequencenumber": "Import Sequence Number",
+      "modifiedby": "Modified By",
+      "modifiedon": "Modified On",
+      "modifiedonbehalfby": "Modified By (Delegate)",
+      "overriddencreatedon": "Record Created On",
+      "owningbusinessunit": "Owning Business Unit",
+      "owningteam": "Owning Team",
+      "owninguser": "Owning User",
+      "statecode": "Status",
+      "statuscode": "Status Reason",
+      "timezoneruleversionnumber": "Time Zone Rule Version Number",
+      "tua_correspondingsharepointurl": "Corresponding SharePoint Url",
+      "tua_customdocumenttemplatemetadata_AsyncOperations": "System Jobs",
+      "tua_customdocumenttemplatemetadata_BulkDeleteFailures": "Bulk Delete Failures",
+      "tua_customdocumenttemplatemetadata_DuplicateBaseRecord": "Duplicate Records (tua_customdocumenttemplatemetadata_DuplicateBaseRecord)",
+      "tua_customdocumenttemplatemetadata_DuplicateMatchingRecord": "Duplicate Records (tua_customdocumenttemplatemetadata_DuplicateMatchingRecord)",
+      "tua_customdocumenttemplatemetadata_MailboxTrackingFolders": "Mailbox Auto Tracking Folders",
+      "tua_customdocumenttemplatemetadata_PrincipalObjectAttributeAccesses": "Field Sharing",
+      "tua_customdocumenttemplatemetadata_ProcessSession": "Process Sessions",
+      "tua_customdocumenttemplatemetadata_SyncErrors": "Sync Errors",
+      "tua_customdocumenttemplatemetadataid": "Custom Document Template Metadata",
+      "tua_isfolder": "Is Folder",
+      "tua_name": "Name",
+      "tua_path": "Path",
+      "tua_personaldocumenttemplateid": "Personal Document Template Id",
+      "utcconversiontimezonecode": "UTC Conversion Time Zone Code",
+      "versionnumber": "Version Number"
+    },
+    "PreferredName": "Custom Document Template Metadatas",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Custom Document Template Metadatas (Views)",
+    "Name": "_tua_customdocumenttemplatemetadata_views",
+    "RelatedEntityName": "Custom Document Template Metadatas",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "5a30387d-f9f5-4b5b-84f8-9d3ead251ea9": "Active Custom Document Template Metadatas",
+      "a213bde2-239a-4a4c-a0f9-62f294d5efdc": "Custom Document Template Metadata Advanced Find View",
+      "ce59a0b4-a93f-4783-9a07-2b75c67e4b90": "Custom Document Template Metadata Associated View",
+      "d26c94b8-ec8b-459c-9bc4-228ba71d2f7e": "Inactive Custom Document Template Metadatas",
+      "fb8a3df2-f373-46c0-8c08-c6bf991b8a58": "Custom Document Template Metadata Lookup View"
+    }
+  },
+  {
+    "DisplayName": "Status (Custom Document Template Metadatas)",
+    "Name": "tua_customdocumenttemplatemetadata_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "Active",
+      "1": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Custom Document Template Metadatas"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Custom Document Template Metadatas",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Status Reason (Custom Document Template Metadatas)",
+    "Name": "tua_customdocumenttemplatemetadata_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "Active",
+      "2": "Inactive"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Custom Document Template Metadatas"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Custom Document Template Metadatas",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "Is Folder (Custom Document Template Metadatas)",
+    "Name": "tua_customdocumenttemplatemetadata_tua_isfolder",
+    "OptionSetInfoNameMapping": {
+      "0": "No",
+      "1": "Yes"
+    },
+    "OptionSetIsBooleanValued": true,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "tua_isfolder",
+        "OptionSetReferenceEntityName": "Custom Document Template Metadatas"
+      }
+    },
+    "OptionSetTypeKey": "BooleanType",
+    "RelatedColumnInvariantName": "tua_isfolder",
+    "RelatedEntityName": "Custom Document Template Metadatas",
+    "Type": "OptionSetInfo"
+  }
+]
