@@ -156,6 +156,36 @@
             },
             "authentication": "@parameters('$authentication')"
           }
+        },
+        "Respond_to_a_PowerApp_or_flow_2": {
+          "runAfter": {
+            "Respond_to_a_PowerApp_or_flow": [
+              "Failed",
+              "Skipped",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7b8fbc23-ad61-44aa-a007-c53c90175187"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "created": "false"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "created": {
+                  "title": "created",
+                  "x-ms-dynamically-added": true,
+                  "type": "boolean"
+                }
+              }
+            }
+          }
         }
       }
     },
