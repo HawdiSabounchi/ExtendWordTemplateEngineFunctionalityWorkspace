@@ -34,12 +34,14 @@
                         {
                             ItemKey: "NewFolder",
                             ItemIconName: "Folder",
-                            ItemDisplayName: "New Folder"
+                            ItemDisplayName: "New Folder",
+                            ItemVisible: hasUserAdminAccess
                         },
                         {
                             ItemKey: "Upload",
                             ItemIconName: "Upload",
-                            ItemDisplayName: "Upload"
+                            ItemDisplayName: "Upload",
+                            ItemVisible: hasUserAdminAccess
                         },
                         {
                             ItemKey: "Refresh",
@@ -49,9 +51,9 @@
                         {
                             ItemKey: "GenerateDocument",
                             ItemIconName: "Waffle",
-                            ItemDisplayName: "Generate Document"
+                            ItemDisplayName: "Generate Document",
+                            ItemVisible:!IsBlank(SelectedTemplateId)
                         }
-                        
                     )
                 LayoutMinHeight: =200
                 LayoutMinWidth: =200
@@ -256,7 +258,32 @@
                     );
                     If(
                         Self.EventName = "OnRowSelectionChange",
-                        UpdateContext({SelectedRecordId: Self.Selected.'Custom Document Template Metadata'})
+                        UpdateContext({SelectedRecordId: Self.Selected.'Custom Document Template Metadata'});
+                        If(
+                            LookUp(
+                                'Custom Document Template Metadatas',
+                                'Custom Document Template Metadata' = GUID(Self.Selected.'Custom Document Template Metadata')
+                            ).'Is Folder' = 'Is Folder (Custom Document Template Metadatas)'.No,
+                            Set(
+                                SelectedTemplateId,
+                                Self.Selected.'Custom Document Template Metadata'
+                            );
+                            Set(
+                                SelectedTemplateName,
+                                LookUp(
+                                    'Custom Document Template Metadatas',
+                                    'Custom Document Template Metadata' = GUID(Self.Selected.'Custom Document Template Metadata')
+                                ).Name
+                            ),
+                            Set(
+                                SelectedTemplateId,
+                                ""
+                            );
+                            Set(
+                                SelectedTemplateName,
+                                ""
+                            )
+                        )
                     );
                     If(
                         !IsBlank(ClickedRecordId),
@@ -460,6 +487,7 @@
                             CurrentDirectory
                         ).created
                     ),
+                    
                     Notify(
                         "Your Foder has been created successfully.",
                         NotificationType.Success
@@ -684,6 +712,7 @@
                 ZIndex: =6
 
                 AttachmentControl_Modal_Upload As attachments:
+                    AccessibleLabel: ="Attachment Control"
                     BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
                     BorderStyle: =BorderStyle.None
                     BorderThickness: =2

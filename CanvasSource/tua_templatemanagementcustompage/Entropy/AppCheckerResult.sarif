@@ -526,36 +526,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "'Home Screen'.Container_Modal_Upload.Form_Modal_Upload.Attachments_DataCard_Modal_Upload.AttachmentControl_Modal_Upload.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "'Home Screen'.Container_Modal_Upload.Form_Modal_Upload.Attachments_DataCard_Modal_Upload.AttachmentControl_Modal_Upload.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Home Screen",
-                "type": "'Home Screen'.Container_Modal_Upload.Form_Modal_Upload.Attachments_DataCard_Modal_Upload.AttachmentControl_Modal_Upload"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 0
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "'Home Screen'.Container_Modal_Upload.Form_Modal_Upload.Attachments_DataCard_Modal_Upload.Checkbox_IsDynamicTemplate.AccessibleLabel"
                 }
               ],
@@ -610,6 +580,36 @@
           },
           "ruleId": "acc-AccessibleLabelNeeded",
           "ruleIndex": 0
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.SelectedTemplateName"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.SelectedTemplateName",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "SelectedTemplateName",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 1
         },
         {
           "locations": [
@@ -716,6 +716,36 @@
               },
               "properties": {
                 "member": "Custom Document Template Metadatas",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-NotOfflineEnabledTable",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.Security Roles"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.Security Roles",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "Security Roles",
                 "module": "App",
                 "type": "App"
               }

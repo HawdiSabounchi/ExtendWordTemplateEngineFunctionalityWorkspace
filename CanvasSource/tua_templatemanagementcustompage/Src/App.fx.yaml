@@ -87,6 +87,30 @@ App As appinfo:
             IsSpinnerVisible,
             false
         );
+        ClearCollect(
+            UserRoles,
+            (LookUp(
+                Users,
+                domainname = User().Email
+            ).'Security Roles (systemuserroles_association)').Name
+        );
+        Set(
+            hasUserAdminAccess,
+            !IsEmpty(
+                Filter(
+                    UserRoles,
+                    Name = "Business Administrator"
+                )
+            )
+        );
+        Set(
+            SelectedTemplateId,
+            ""
+        );
+        Set(
+            SelectedTemplateName,
+            ""
+        );
 
     Host As hostControl.DefaultHostControlVariant:
         OnCancel: =false

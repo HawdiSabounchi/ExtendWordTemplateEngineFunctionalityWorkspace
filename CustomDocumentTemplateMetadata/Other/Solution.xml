@@ -79,6 +79,8 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="1" schemaName="tua_customdocumenttemplatemetadata" behavior="0" />
+      <RootComponent type="20" id="{5798083b-792d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
+      <RootComponent type="20" id="{69c5fb7a-792d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="29" id="{63d3de39-1f2d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="29" id="{f79cd168-7428-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="62" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
