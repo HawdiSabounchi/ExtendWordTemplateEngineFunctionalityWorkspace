@@ -193,7 +193,7 @@
         "Name": "txtSearchInput_1",
         "Parent": "SearchBox",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 23,
+        "PublishOrderIndex": 35,
         "Rules": [
           {
             "Category": "Data",
@@ -600,7 +600,7 @@
         "Name": "imgSearch_1",
         "Parent": "SearchBox",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 24,
+        "PublishOrderIndex": 36,
         "Rules": [
           {
             "Category": "Data",
@@ -831,7 +831,7 @@
         "NameMapSourceSchema": "?"
       }
     ],
-    "LastModifiedTimestamp": "638256932012746814",
+    "LastModifiedTimestamp": "638261533758310168",
     "Name": "SearchBox",
     "Rules": [
       {
@@ -921,7 +921,7 @@
   "IsPcfControl": false,
   "IsPremiumPcfControl": false,
   "IsWidgetTemplate": false,
-  "LastModifiedTimestamp": "638256932012746814",
+  "LastModifiedTimestamp": "638261533758310168",
   "Name": "a7b4c150851e48cd9135da59f99e01ba",
   "OverridableProperties": {},
   "TemplateOriginalName": "380b369471b04e0ba2ab3681096aaab4",

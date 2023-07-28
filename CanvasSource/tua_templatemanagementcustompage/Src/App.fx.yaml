@@ -1,6 +1,6 @@
 App As appinfo:
     BackEnabled: =false
-    OnStart: |-
+    OnStart: |
         =Set(
             AppTheme,
             {
@@ -77,6 +77,14 @@ App As appinfo:
         );
         Set(
             IsModalNewFolderVisible,
+            false
+        );
+        Set(
+            IsModalUploadVisible,
+            false
+        );
+        Set(
+            IsSpinnerVisible,
             false
         );
 

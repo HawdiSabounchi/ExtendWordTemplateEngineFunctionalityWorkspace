@@ -1,0 +1,612 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "tua_sharedsharepointonline_14783"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "tua_sharedcommondataserviceforapps_19a31"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "SharePoint Site (tua_SharePointSite)": {
+          "defaultValue": "https://qpx1.sharepoint.com/sites/Dev-Hadi",
+          "type": "String",
+          "metadata": {
+            "schemaName": "tua_SharePointSite"
+          }
+        },
+        "Custom Document Template Management (tua_CustomDocumentTemplateManagement)": {
+          "defaultValue": "1eb6f3d9-7566-4d97-aa8e-14575296976a",
+          "type": "String",
+          "metadata": {
+            "schemaName": "tua_CustomDocumentTemplateManagement"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "73778618-1c93-4c7f-a5ec-7ac4a790369f"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "FileName",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your file name",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "Path",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your path",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_2": {
+                  "title": "CorrespondingSharePointUrl",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your corresponding sharepoint URL",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "boolean": {
+                  "title": "IsDynamicTemplate",
+                  "type": "boolean",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please select is dynamic template",
+                  "x-ms-content-hint": "BOOLEAN"
+                },
+                "file": {
+                  "title": "FileContent",
+                  "type": "object",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please select file content",
+                  "x-ms-content-hint": "FILE",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "contentBytes": {
+                      "type": "string",
+                      "format": "byte"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "boolean"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Try": {
+          "actions": {
+            "Send_an_HTTP_request_to_SharePoint_for_getting_document_library_relative_url": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "bb836d72-278e-4660-a572-89df0b841bf4"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('SharePoint Site (tua_SharePointSite)')",
+                  "parameters/method": "GET",
+                  "parameters/uri": "_api/web/lists(guid('@{parameters('Custom Document Template Management (tua_CustomDocumentTemplateManagement)')}')?$select=Title,RootFolder/ServerRelativeUrl&$expand=RootFoder",
+                  "parameters/headers": {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                  }
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Create_or_update_a_file_on_given_directory": {
+              "runAfter": {
+                "Send_an_HTTP_request_to_SharePoint_for_getting_document_library_relative_url": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8cf4e977-a619-435b-b655-11b69fb3de81"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "CreateFile",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('SharePoint Site (tua_SharePointSite)')",
+                  "folderPath": "@{last(split(outputs('Send_an_HTTP_request_to_SharePoint_for_getting_document_library_relative_url')?['body']['RootFolder']['ServerRelativeUrl'],'/'))}/@{triggerBody()['text_1']}",
+                  "name": "@triggerBody()['text']",
+                  "body": "@triggerBody()?['file']?['contentBytes']"
+                },
+                "authentication": "@parameters('$authentication')"
+              },
+              "runtimeConfiguration": {
+                "contentTransfer": {
+                  "transferMode": "Chunked"
+                }
+              }
+            },
+            "check_either_is_dynamic_template_or_not": {
+              "actions": {
+                "Get_Personal_Document_Template_for_given_document": {
+                  "runAfter": {},
+                  "metadata": {
+                    "operationMetadataId": "9e6557fa-60af-4d6e-9984-ee2099af4364"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "ListRecords",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "personaldocumenttemplates",
+                      "$select": "personaldocumenttemplateid",
+                      "$filter": "name eq '@{triggerBody()['text']}'",
+                      "$top": 1
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Check_if_there_is_a_personal_document_template_for_selected_filename_or_not": {
+                  "actions": {
+                    "Apply_to_each": {
+                      "foreach": "@outputs('Get_Personal_Document_Template_for_given_document')?['body/value']",
+                      "actions": {
+                        "Update_existing_personal_document_template": {
+                          "runAfter": {},
+                          "metadata": {
+                            "operationMetadataId": "36cef4f6-1a8c-499a-a4f1-daec04113cf4"
+                          },
+                          "type": "OpenApiConnection",
+                          "inputs": {
+                            "host": {
+                              "connectionName": "shared_commondataserviceforapps",
+                              "operationId": "UpdateRecord",
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                            },
+                            "parameters": {
+                              "entityName": "personaldocumenttemplates",
+                              "recordId": "@items('Apply_to_each')?['personaldocumenttemplateid']",
+                              "item/content": "@decodeBase64(base64(triggerBody()?['file']?['contentBytes']))",
+                              "item/name": "@triggerBody()['text']"
+                            },
+                            "authentication": "@parameters('$authentication')"
+                          }
+                        }
+                      },
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "c1f4d57a-440c-4656-91d6-d5837a4de38c"
+                      },
+                      "type": "Foreach"
+                    }
+                  },
+                  "runAfter": {
+                    "Get_Personal_Document_Template_for_given_document": [
+                      "Succeeded"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Add_Personal_Document_Template": {
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "76f076f5-b388-48a7-bf3f-f82550244847"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connectionName": "shared_commondataserviceforapps",
+                            "operationId": "CreateRecord",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                          },
+                          "parameters": {
+                            "entityName": "personaldocumenttemplates",
+                            "item/content": "@decodeBase64(base64(triggerBody()?['file']?['contentBytes']))",
+                            "item/name": "@triggerBody()['text']",
+                            "item/documenttype": 2
+                          },
+                          "authentication": "@parameters('$authentication')"
+                        }
+                      }
+                    }
+                  },
+                  "expression": {
+                    "greater": [
+                      "@length(outputs('Get_Personal_Document_Template_for_given_document')?['body/value'])",
+                      0
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "6f4e6754-6868-450f-8441-900b543866a8"
+                  },
+                  "type": "If"
+                },
+                "Get_Custom_Document_Template_Metadata_With_Given_Information": {
+                  "runAfter": {
+                    "Compose_Personal_Document_Template_Id": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "68d258d1-2c3a-45e6-a8f5-d6d6bd96aa32"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "host": {
+                      "connectionName": "shared_commondataserviceforapps",
+                      "operationId": "ListRecords",
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                    },
+                    "parameters": {
+                      "entityName": "tua_customdocumenttemplatemetadatas",
+                      "$select": "tua_customdocumenttemplatemetadataid",
+                      "$filter": "tua_name eq '@{triggerBody()['text']}' and tua_path eq '@{triggerBody()['text_1']}'",
+                      "$top": 1
+                    },
+                    "authentication": "@parameters('$authentication')"
+                  }
+                },
+                "Check_if_there_is_a_custom_document_template_metadata_for_selected_file_or_not": {
+                  "actions": {
+                    "Apply_to_each_2": {
+                      "foreach": "@outputs('Get_Custom_Document_Template_Metadata_With_Given_Information')?['body/value']",
+                      "actions": {
+                        "Update_Custom_Document_Template_Metadata": {
+                          "runAfter": {},
+                          "metadata": {
+                            "operationMetadataId": "f39c66ea-495c-4512-ba31-d59f7dac977e"
+                          },
+                          "type": "OpenApiConnection",
+                          "inputs": {
+                            "host": {
+                              "connectionName": "shared_commondataserviceforapps",
+                              "operationId": "UpdateRecord",
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                            },
+                            "parameters": {
+                              "entityName": "tua_customdocumenttemplatemetadatas",
+                              "recordId": "@items('Apply_to_each_2')?['tua_customdocumenttemplatemetadataid']",
+                              "item/tua_correspondingsharepointurl": "@outputs('Create_or_update_a_file_on_given_directory')?['body/Path']",
+                              "item/tua_isfolder": false,
+                              "item/tua_personaldocumenttemplateid": "@outputs('Compose_Personal_Document_Template_Id')"
+                            },
+                            "authentication": "@parameters('$authentication')"
+                          }
+                        }
+                      },
+                      "runAfter": {},
+                      "metadata": {
+                        "operationMetadataId": "b49c178c-3824-490a-a134-0c375f44ff09"
+                      },
+                      "type": "Foreach"
+                    }
+                  },
+                  "runAfter": {
+                    "Get_Custom_Document_Template_Metadata_With_Given_Information": [
+                      "Succeeded"
+                    ]
+                  },
+                  "else": {
+                    "actions": {
+                      "Add_Custom_Document_Template_Metadata": {
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "2c6415c7-216c-413b-89cf-2b3d8b48924f"
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "host": {
+                            "connectionName": "shared_commondataserviceforapps",
+                            "operationId": "CreateRecord",
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                          },
+                          "parameters": {
+                            "entityName": "tua_customdocumenttemplatemetadatas",
+                            "item/tua_correspondingsharepointurl": "@outputs('Create_or_update_a_file_on_given_directory')?['body/Path']",
+                            "item/tua_isfolder": false,
+                            "item/tua_name": "@triggerBody()['text']",
+                            "item/tua_path": "@triggerBody()['text_1']",
+                            "item/tua_personaldocumenttemplateid": "@outputs('Compose_Personal_Document_Template_Id')"
+                          },
+                          "authentication": "@parameters('$authentication')"
+                        }
+                      }
+                    }
+                  },
+                  "expression": {
+                    "greater": [
+                      "@length(outputs('Get_Custom_Document_Template_Metadata_With_Given_Information')?['body/value'])",
+                      0
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "609e86ae-dcdf-451b-85af-6c7cf5f9ae8d"
+                  },
+                  "type": "If"
+                },
+                "Compose_Personal_Document_Template_Id": {
+                  "runAfter": {
+                    "Check_if_there_is_a_personal_document_template_for_selected_filename_or_not": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "ac25f3e4-31d5-48c1-8f2c-0215e4e8b059"
+                  },
+                  "type": "Compose",
+                  "inputs": "@if(greater(length(outputs('Get_Personal_Document_Template_for_given_document')?['body/value']),0),first(outputs('Get_Personal_Document_Template_for_given_document')?['body/value'])?['personaldocumenttemplateid'],outputs('Add_Personal_Document_Template')?['body/personaldocumenttemplateid'])"
+                },
+                "Respond_to_a_PowerApp_if_flows_run_successfully": {
+                  "runAfter": {
+                    "Check_if_there_is_a_custom_document_template_metadata_for_selected_file_or_not": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "94c6d1f5-56ff-4e7f-bace-be1da7fb7702"
+                  },
+                  "type": "Response",
+                  "kind": "PowerApp",
+                  "inputs": {
+                    "statusCode": 200,
+                    "body": {
+                      "completed": true
+                    },
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "completed": {
+                          "title": "completed",
+                          "x-ms-dynamically-added": true,
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Create_or_update_a_file_on_given_directory": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Get_Custom_Document_Template_Metadata_with_given_information_2": {
+                    "runAfter": {},
+                    "metadata": {
+                      "operationMetadataId": "d543e94b-a6aa-4a7f-a010-f1cc25965601"
+                    },
+                    "type": "OpenApiConnection",
+                    "inputs": {
+                      "host": {
+                        "connectionName": "shared_commondataserviceforapps",
+                        "operationId": "ListRecords",
+                        "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                      },
+                      "parameters": {
+                        "entityName": "tua_customdocumenttemplatemetadatas",
+                        "$select": "tua_customdocumenttemplatemetadataid",
+                        "$filter": "tua_name eq '@{triggerBody()['text']}' and tua_path eq '@{triggerBody()['text_1']}'",
+                        "$top": 1
+                      },
+                      "authentication": "@parameters('$authentication')"
+                    }
+                  },
+                  "Condition": {
+                    "actions": {
+                      "Apply_to_each_3": {
+                        "foreach": "@outputs('Get_Custom_Document_Template_Metadata_with_given_information_2')?['body/value']",
+                        "actions": {
+                          "Update_Custom_Document_Template_Metadata_for_non-dynamics_Templates": {
+                            "runAfter": {},
+                            "metadata": {
+                              "operationMetadataId": "2f185f65-8fd6-47f1-9670-1a4f127c005f"
+                            },
+                            "type": "OpenApiConnection",
+                            "inputs": {
+                              "host": {
+                                "connectionName": "shared_commondataserviceforapps",
+                                "operationId": "UpdateRecord",
+                                "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                              },
+                              "parameters": {
+                                "entityName": "tua_customdocumenttemplatemetadatas",
+                                "recordId": "@items('Apply_to_each_3')?['tua_customdocumenttemplatemetadataid']",
+                                "item/tua_correspondingsharepointurl": "@outputs('Create_or_update_a_file_on_given_directory')?['body/Path']",
+                                "item/tua_isfolder": false
+                              },
+                              "authentication": "@parameters('$authentication')"
+                            }
+                          }
+                        },
+                        "runAfter": {},
+                        "metadata": {
+                          "operationMetadataId": "7fbcdd7f-6fe8-4805-86ff-c694dc853410"
+                        },
+                        "type": "Foreach"
+                      }
+                    },
+                    "runAfter": {
+                      "Get_Custom_Document_Template_Metadata_with_given_information_2": [
+                        "Succeeded"
+                      ]
+                    },
+                    "else": {
+                      "actions": {
+                        "Create_Custom_Document_Template_Metadata_for_non-dynamics_Templates": {
+                          "runAfter": {},
+                          "metadata": {
+                            "operationMetadataId": "77163ea7-bc7c-4f77-91f7-ed02885b1324"
+                          },
+                          "type": "OpenApiConnection",
+                          "inputs": {
+                            "host": {
+                              "connectionName": "shared_commondataserviceforapps",
+                              "operationId": "CreateRecord",
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+                            },
+                            "parameters": {
+                              "entityName": "tua_customdocumenttemplatemetadatas",
+                              "item/tua_correspondingsharepointurl": "@outputs('Create_or_update_a_file_on_given_directory')?['body/Path']",
+                              "item/tua_isfolder": false,
+                              "item/tua_name": "@triggerBody()['text']",
+                              "item/tua_path": "@triggerBody()['text_1']",
+                              "item/tua_personaldocumenttemplateid": "/"
+                            },
+                            "authentication": "@parameters('$authentication')"
+                          }
+                        }
+                      }
+                    },
+                    "expression": {
+                      "greater": [
+                        "@length(outputs('Get_Custom_Document_Template_Metadata_with_given_information_2')?['body/value'])",
+                        0
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "441182ae-b803-4929-ba63-f6a19f198457"
+                    },
+                    "type": "If"
+                  },
+                  "Respond_to_a_PowerApp_if_non_dynamic_template_uploaded": {
+                    "runAfter": {
+                      "Condition": [
+                        "Succeeded"
+                      ]
+                    },
+                    "metadata": {
+                      "operationMetadataId": "f5676448-e82b-408f-aa7d-f529356af8aa"
+                    },
+                    "type": "Response",
+                    "kind": "PowerApp",
+                    "inputs": {
+                      "statusCode": 200,
+                      "body": {
+                        "completed": true
+                      },
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "completed": {
+                            "title": "completed",
+                            "x-ms-dynamically-added": true,
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "expression": {
+                "equals": [
+                  "@triggerBody()['boolean']",
+                  true
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "7c624c68-cf3d-402a-bb59-adb2b88bc698"
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "9618ce9c-27c5-4c0b-af45-9ed236a6dedb"
+          },
+          "type": "Scope"
+        },
+        "Catch": {
+          "actions": {
+            "Respond_to_a_PowerApp_if_flow_has_an_error": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "3e81d2fd-fac9-4d3b-aaef-25e678e77259"
+              },
+              "type": "Response",
+              "kind": "PowerApp",
+              "inputs": {
+                "statusCode": 200,
+                "body": {
+                  "completed": false
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "completed": {
+                      "title": "completed",
+                      "x-ms-dynamically-added": true,
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Try": [
+              "Failed",
+              "Skipped",
+              "TimedOut"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a6ff0159-71c0-4c78-9858-a984dcbcde2f"
+          },
+          "type": "Scope"
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

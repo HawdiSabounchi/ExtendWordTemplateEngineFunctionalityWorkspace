@@ -13,6 +13,35 @@
     "OverridableProperties": {},
     "Version": "1.0"
   },
+  "attachments": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/attachments",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": true,
+    "LastModifiedTimestamp": "0",
+    "Name": "attachments",
+    "OverridableProperties": {},
+    "Version": "2.3.0"
+  },
+  "Check box": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/powercontrol/Microsoft_CoreControls_Checkbox",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": true,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": false,
+    "LastModifiedTimestamp": "0",
+    "Name": "Microsoft_CoreControls_Checkbox",
+    "OverridableProperties": {},
+    "TemplateDisplayName": "Check box",
+    "Version": "1.7.1"
+  },
   "Fluent Command Bar (1.0.22)": {
     "CustomGroupControlTemplateName": "",
     "FirstParty": false,
@@ -72,6 +101,35 @@
     "OverridableProperties": {},
     "TemplateDisplayName": "Fluent Icon (1.0.22)",
     "Version": "1.0.22"
+  },
+  "Fluent Spinner (1.0.22) Preview": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": false,
+    "Id": "http://microsoft.com/appmagic/powercontrol/cat_PowerCAT.Spinner",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": true,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": false,
+    "LastModifiedTimestamp": "0",
+    "Name": "cat_PowerCAT.Spinner",
+    "OverridableProperties": {},
+    "TemplateDisplayName": "Fluent Spinner (1.0.22) Preview",
+    "Version": "1.0.22"
+  },
+  "form": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/form",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": true,
+    "LastModifiedTimestamp": "0",
+    "Name": "form",
+    "OverridableProperties": {},
+    "Version": "2.4.0"
   },
   "groupContainer": {
     "CustomGroupControlTemplateName": "",
@@ -215,5 +273,19 @@
     "OverridableProperties": {},
     "TemplateDisplayName": "Text box",
     "Version": "1.6.1"
+  },
+  "typedDataCard": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": true,
+    "Id": "http://microsoft.com/appmagic/card",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": false,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": false,
+    "LastModifiedTimestamp": "0",
+    "Name": "typedDataCard",
+    "OverridableProperties": {},
+    "Version": "1.0.6"
   }
 }

@@ -1,0 +1,16 @@
+<environmentvariabledefinition schemaname="tua_TemplateManagementCustomPageAttachmentList">
+  <apiid>/providers/microsoft.powerapps/apis/shared_sharepointonline</apiid>
+  <defaultvalue>46277da4-05e1-4615-86e8-30a085f1aeb5</defaultvalue>
+  <displayname default="Template Management Custom Page Attachment List">
+    <label description="Template Management Custom Page Attachment List" languagecode="1033" />
+  </displayname>
+  <introducedversion>1.0.0.0</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <parameterkey>table</parameterkey>
+  <parentdefinitionid>
+    <schemaname>tua_SharePointSite</schemaname>
+  </parentdefinitionid>
+  <secretstore>0</secretstore>
+  <type>100000004</type>
+</environmentvariabledefinition>

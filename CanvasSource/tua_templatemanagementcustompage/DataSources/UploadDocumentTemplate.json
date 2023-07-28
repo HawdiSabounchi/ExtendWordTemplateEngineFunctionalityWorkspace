@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "53aca528-ddf5-4068-9e9d-051da0106411",
+    "Name": "UploadDocumentTemplate",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "63d3de39-1f2d-ee11-bdf4-000d3aa9a3cc"
+  }
+]

@@ -55,7 +55,7 @@
                     )
                 LayoutMinHeight: =200
                 LayoutMinWidth: =200
-                OnSelect: |-
+                OnSelect: |
                     =Set(
                         SelectedMenuItem,
                         Self.Selected.ItemKey
@@ -68,9 +68,24 @@
                         );
                         UpdateContext({ClickedRecordId: ""})
                     );
-                    If(Self.Selected.ItemKey="Refresh", Refresh('Custom Document Template Metadatas'));
-                    
-                    If(Self.Selected.ItemKey="NewFolder",Set(IsModalNewFolderVisible,true));
+                    If(
+                        Self.Selected.ItemKey = "Refresh",
+                        Refresh('Custom Document Template Metadatas')
+                    );
+                    If(
+                        Self.Selected.ItemKey = "NewFolder",
+                        Set(
+                            IsModalNewFolderVisible,
+                            true
+                        )
+                    );
+                    If(
+                        Self.Selected.ItemKey = "Upload",
+                        Set(
+                            IsModalUploadVisible,
+                            true
+                        )
+                    );
                 Theme: =AppThemeJson
                 Width: =600 
                 X: =0
@@ -227,12 +242,8 @@
                                 )
                             ),
                             And(
-                                Path = If(
-                                    CurrentDirectory = "/",
-                                    "/",
-                                    CurrentDirectory & "/"
-                                ),
-                                Name <> "/"
+                                Name <> "/",
+                                Path = CurrentDirectory
                             )
                         ),
                         "tua_isfolder",
@@ -262,7 +273,7 @@
                                 ).Path & LookUp(
                                     'Custom Document Template Metadatas',
                                     'Custom Document Template Metadata' = GUID(ClickedRecordId)
-                                ).Name
+                                ).Name & "/"
                             )
                         )
                     );
@@ -438,25 +449,37 @@
             IconName: ="send"
             IconType: ='PowerCAT.Icon.IconType'.ActionButton
             OnChange: |
-                =If(
+                =Set(
+                    IsSpinnerVisible,
+                    true
+                );
+                If(
                     Boolean(
                         CreateNewFolderOnCustomDocumentTemplateMetadata.Run(
                             TextBox_Modal_NewFolder.Value,
-                            If(
-                                CurrentDirectory <> "/",
-                                CurrentDirectory & "/",
-                                CurrentDirectory
-                            )
+                            CurrentDirectory
                         ).created
                     ),
-                    Refresh('Custom Document Template Metadatas');
-                    Set(
-                        IsModalNewFolderVisible,
-                        false
+                    Notify(
+                        "Your Foder has been created successfully.",
+                        NotificationType.Success
+                    ),
+                    Notify(
+                        "There is a problam with creating the folder. Please Check your folder name.",
+                        NotificationType.Error
                     );
-                    UpdateContext({FolderNameValue: Blank()});
-                    UpdateContext({FolderNameValue: ""});
                     
+                );
+                Refresh('Custom Document Template Metadatas');
+                Set(
+                    IsModalNewFolderVisible,
+                    false
+                );
+                UpdateContext({FolderNameValue: Blank()});
+                UpdateContext({FolderNameValue: ""});
+                Set(
+                    IsSpinnerVisible,
+                    false
                 );
             Text: ="OK"
             TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
@@ -465,4 +488,301 @@
             X: =AppSettings.Dimensions.Modal.Button.X*9
             Y: =AppSettings.Dimensions.Modal.Button.Y
             ZIndex: =7
+
+    Container_Modal_Upload As groupContainer.manualLayoutContainer:
+        DropShadow: =DropShadow.Light
+        Height: =AppSettings.Dimensions.Modal.height*2
+        RadiusBottomLeft: =4
+        RadiusBottomRight: =4
+        RadiusTopLeft: =4
+        RadiusTopRight: =4
+        Visible: =IsModalUploadVisible
+        Width: =AppSettings.Dimensions.Modal.width
+        X: =Parent.Width/2-Self.Width/2
+        Y: =Parent.Height/2-Self.Height/2
+        ZIndex: =3
+
+        "Elevation_Modal_Upload As 'Fluent Elevation (1.0.22)'":
+            Depth: ='PowerCAT.Elevation.Depth'.Depth16
+            DisplayMode: =DisplayMode.Edit
+            Height: =Parent.Height
+            HoverDepth: ='PowerCAT.Elevation.HoverDepth'.Depth16
+            PaddingBottom: =AppSettings.Dimensions.PaddingBottom
+            PaddingLeft: =AppSettings.Dimensions.PaddingLeft
+            PaddingRight: =AppSettings.Dimensions.PaddingRight
+            PaddingTop: =AppSettings.Dimensions.PaddingTop
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        Rectangle_Modal_Upload As rectangle:
+            BorderColor: =RGBA(166, 166, 166, 1)
+            BorderStyle: =BorderStyle.None
+            BorderThickness: =2
+            DisabledFill: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(0, 120, 212, 1)
+            FocusedBorderColor: =RGBA(0, 120, 212, 1)
+            Height: =AppSettings.Dimensions.Modal.Button.Height
+            HoverFill: =RGBA(0, 120, 212, 1)
+            PressedFill: =RGBA(0, 120, 212, 1)
+            Width: =Parent.Width-Elevation_Modal_NewFolder.PaddingLeft*2
+            X: =Elevation_Modal_NewFolder.PaddingLeft
+            Y: =Elevation_Modal_NewFolder.PaddingTop
+            ZIndex: =2
+
+        Label_Modal_Upload As Label:
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.Edit
+            FontWeight: =FontWeight.Bold
+            Height: =Rectangle_Modal_Upload.Height
+            PaddingStart: =Elevation_Modal_NewFolder.PaddingLeft*3
+            Text: ="Upload Template Document"
+            Width: =Parent.Width-Elevation_Modal_NewFolder.PaddingLeft*2
+            X: =Elevation_Modal_NewFolder.PaddingLeft
+            Y: =Elevation_Modal_NewFolder.PaddingTop
+            ZIndex: =3
+
+        "Button_Close_Modal_Upload As 'Fluent Icon (1.0.22)'":
+            DisplayMode: =DisplayMode.Edit
+            Height: =AppSettings.Dimensions.Modal.Icon.Height
+            HoverFillColor: ="ColorFade(RGBA(0,120,212,1),-30%)"
+            IconColor: ="white"
+            IconName: ="cancel"
+            IconSize: =
+            OnChange: |
+                =Set(
+                    IsModalUploadVisible,
+                    false
+                );
+                ResetForm(Form_Modal_Upload);
+            TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
+            Tooltip: ="Close"
+            Width: =AppSettings.Dimensions.Modal.Icon.Width
+            X: =Parent.Width-Elevation_Modal_NewFolder.PaddingRight*4
+            Y: =Elevation_Modal_NewFolder.PaddingTop*1.9
+            ZIndex: =4
+
+        "Button_Cancel_Modal_Upload As 'Fluent Icon (1.0.22)'":
+            BorderRadius: =3
+            DisplayMode: =DisplayMode.Edit
+            FillColor: =AppSettings.Colors.Modal.Button.Cancel
+            FontColor: =AppSettings.Colors.Modal.Button.FontColor
+            FontSize: =15
+            Height: =AppSettings.Dimensions.Modal.Button.Height
+            IconColor: =AppSettings.Colors.Modal.Button.FontColor
+            IconName: ="cancel"
+            IconType: ='PowerCAT.Icon.IconType'.ActionButton
+            OnChange: |
+                =Set(
+                    IsModalUploadVisible,
+                    false
+                );
+                ResetForm(Form_Modal_Upload);
+            Text: ="Cancel"
+            TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
+            Tooltip: ="Cancel"
+            Width: =AppSettings.Dimensions.Modal.Button.Width
+            X: =AppSettings.Dimensions.Modal.Button.X
+            Y: =322
+            ZIndex: =5
+
+        "Button_Ok_Modal_Upload As 'Fluent Icon (1.0.22)'":
+            BorderRadius: =3
+            DisplayMode: |-
+                =If(
+                    IsEmpty(AttachmentControl_Modal_Upload.Attachments),
+                    DisplayMode.Disabled,
+                    DisplayMode.Edit
+                )
+            FillColor: =AppSettings.Colors.Modal.Button.Ok
+            FontColor: =AppSettings.Colors.Modal.Button.FontColor
+            FontSize: =15
+            Height: =AppSettings.Dimensions.Modal.Button.Height
+            IconColor: =AppSettings.Colors.Modal.Button.FontColor
+            IconName: ="send"
+            IconType: ='PowerCAT.Icon.IconType'.ActionButton
+            OnChange: |
+                =Set(
+                    IsSpinnerVisible,
+                    true
+                );
+                If(
+                    Boolean(
+                        UploadDocumentTemplate.Run(
+                            Last(AttachmentControl_Modal_Upload.Attachments).Name,
+                            CurrentDirectory,
+                            LookUp(
+                                'Custom Document Template Metadatas',
+                                Name = "/"
+                            ).'Corresponding SharePoint Url' & Right(
+                                CurrentDirectory,
+                                Len(CurrentDirectory) - 1
+                            ),
+                            Checkbox_IsDynamicTemplate.Checked,
+                            {
+                                file: {
+                                    contentBytes: Last(AttachmentControl_Modal_Upload.Attachments).Value,
+                                    name: Last(AttachmentControl_Modal_Upload.Attachments).Name
+                                }
+                            }
+                        ).completed
+                    ),
+                    Notify(
+                        "Your Template has been Uploaded Successfully.",
+                        NotificationType.Success
+                    ),
+                    Notify(
+                        "There is a problem eith Uploading your template document. Please Check your document template.",
+                        NotificationType.Error
+                    )
+                );
+                ResetForm(Form_Modal_Upload);
+                Set(
+                    IsSpinnerVisible,
+                    false
+                );
+                Refresh('Custom Document Template Metadatas');
+                Set(
+                    IsModalUploadVisible,
+                    false
+                );
+            Text: ="OK"
+            TextAlignment: ='PowerCAT.Icon.TextAlignment'.Center
+            Tooltip: ="Create Folder"
+            Width: =AppSettings.Dimensions.Modal.Button.Width
+            X: =AppSettings.Dimensions.Modal.Button.X*9
+            Y: =322
+            ZIndex: =6
+
+        Form_Modal_Upload As form:
+            BorderColor: =RGBA(166, 166, 166, 1)
+            DataSource: ='Template Management Custom Page Attachment List'
+            DefaultMode: =FormMode.New
+            Height: =Parent.Height/2
+            NumberOfColumns: =1
+            Width: =Parent.Width-Elevation_Modal_Upload.PaddingLeft*2
+            X: =Elevation_Modal_Upload.PaddingLeft
+            Y: =Rectangle_Modal_Upload.Height+ Elevation_Modal_Upload.PaddingTop
+            ZIndex: =7
+
+            Attachments_DataCard_Modal_Upload As typedDataCard.attachmentsEditCard:
+                BorderColor: =RGBA(166, 166, 166, 1)
+                BorderStyle: =BorderStyle.Solid
+                DataField: ="{Attachments}"
+                Default: =ThisItem.Attachments
+                DisplayMode: =Parent.DisplayMode
+                DisplayName: =DataSourceInfo([@'Template Management Custom Page Attachment List'],DataSourceInfo.DisplayName,"{Attachments}")
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =Parent.Height
+                Required: =false
+                Update: =AttachmentControl_Modal_Upload.Attachments
+                Width: =480
+                WidthFit: =false
+                X: =0
+                Y: =0
+                ZIndex: =6
+
+                AttachmentControl_Modal_Upload As attachments:
+                    BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                    BorderStyle: =BorderStyle.None
+                    BorderThickness: =2
+                    Color: =RGBA(51, 51, 51, 1)
+                    DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    DisplayMode: =Parent.DisplayMode
+                    FocusedBorderThickness: =2
+                    Font: =Font.'Segoe UI'
+                    Height: =Parent.Height
+                    HoverColor: =RGBA(51, 51, 51, 1)
+                    HoverFill: =RGBA(212, 212, 212, 1)
+                    IsInDataCard: =true
+                    ItemColor: =RGBA(0, 0, 0, 1)
+                    ItemFill: =RGBA(0, 120, 212, 1)
+                    ItemHoverColor: =RGBA(51, 51, 51, 1)
+                    ItemHoverFill: =RGBA(212, 212, 212, 1)
+                    Items: =Parent.Default
+                    ItemSpacing: =12
+                    MaxAttachments: =1
+                    MaxAttachmentSize: =100
+                    NoAttachmentsColor: =RGBA(166, 166, 166, 1)
+                    OnAddFile: |
+                        =If(
+                            !Or(
+                                Right(
+                                    Last(Self.Attachments).Name,
+                                    Len(Last(Self.Attachments).Name) - Find(
+                                        "|",
+                                        Substitute(
+                                            Last(Self.Attachments).Name,
+                                            ".",
+                                            "|",
+                                            Len(Last(Self.Attachments).Name) - Len(
+                                                Substitute(
+                                                    Last(Self.Attachments).Name,
+                                                    ".",
+                                                    ""
+                                                )
+                                            )
+                                        )
+                                    )
+                                ) = "docx",
+                                Right(
+                                    Last(Self.Attachments).Name,
+                                    Len(Last(Self.Attachments).Name) - Find(
+                                        "|",
+                                        Substitute(
+                                            Last(Self.Attachments).Name,
+                                            ".",
+                                            "|",
+                                            Len(Last(Self.Attachments).Name) - Len(
+                                                Substitute(
+                                                    Last(Self.Attachments).Name,
+                                                    ".",
+                                                    ""
+                                                )
+                                            )
+                                        )
+                                    )
+                                ) = "doc"
+                            ),
+                            Notify(
+                                "Your selected template file should have a .doc or .docx .",
+                                NotificationType.Error
+                            );
+                            ResetForm(Form_Modal_Upload);
+                        )
+                    PaddingBottom: =5
+                    PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                    PaddingRight: =5
+                    PaddingTop: =5
+                    PressedColor: =RGBA(255, 255, 255, 1)
+                    PressedFill: =RGBA(0, 120, 212, 1)
+                    Size: =10.5
+                    Tooltip: =Parent.DisplayName
+                    Width: =Parent.Width - 60
+                    X: =30
+                    Y: =
+                    ZIndex: =2
+
+                "Checkbox_IsDynamicTemplate As 'Check box'":
+                    DisplayMode: =DisplayMode.Edit
+                    Height: =32
+                    Label: ="Dynamic Template"
+                    Width: =160
+                    X: =39
+                    Y: =98
+                    ZIndex: =3
+
+    "Spinner As 'Fluent Spinner (1.0.22) Preview'":
+        BackgroundColor: ="RGBA(119,136,153,.5)"
+        DisplayMode: =DisplayMode.Edit
+        Height: =Parent.Height
+        Label: ="Loading"
+        Visible: =IsSpinnerVisible
+        Width: =Parent.Width
+        X: =0
+        Y: =0
+        ZIndex: =4
 

@@ -79,6 +79,7 @@
     </Publisher>
     <RootComponents>
       <RootComponent type="1" schemaName="tua_customdocumenttemplatemetadata" behavior="0" />
+      <RootComponent type="29" id="{63d3de39-1f2d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="29" id="{f79cd168-7428-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="62" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
       <RootComponent type="80" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
@@ -108,6 +109,10 @@
       </MissingDependency>
       <MissingDependency>
         <Required type="66" schemaName="cat_PowerCAT.Icon" displayName="cat_PowerCAT.Icon" solution="CreatorKitCore (1.0.20230421.1)" />
+        <Dependent type="300" schemaName="tua_templatemanagementcustompage_85384" displayName="Template Management Custom Page" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="66" schemaName="cat_PowerCAT.Spinner" displayName="cat_PowerCAT.Spinner" solution="CreatorKitCore (1.0.20230421.1)" />
         <Dependent type="300" schemaName="tua_templatemanagementcustompage_85384" displayName="Template Management Custom Page" />
       </MissingDependency>
     </MissingDependencies>
