@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ImportExportXml version="9.2.23064.182" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.23071.162" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
     <UniqueName>CustomDocumentTemplateMetadata</UniqueName>
     <LocalizedNames>
@@ -82,6 +82,7 @@
       <RootComponent type="20" id="{5798083b-792d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="20" id="{69c5fb7a-792d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="29" id="{63d3de39-1f2d-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
+      <RootComponent type="29" id="{f75eb3a6-832e-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="29" id="{f79cd168-7428-ee11-bdf4-000d3aa9a3cc}" behavior="0" />
       <RootComponent type="62" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
       <RootComponent type="80" schemaName="tua_ExtendWordTemplateEngineFunctionalit" behavior="0" />
